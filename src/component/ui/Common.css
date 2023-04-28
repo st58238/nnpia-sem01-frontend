@@ -1,0 +1,42 @@
+:root {
+    --bgc: rgb(25, 118, 210);
+    --bgc-grey: rgb(248, 248, 248);
+}
+
+html {
+    color: #bcd;
+}
+
+html, body {
+    min-height: 100vh;
+    height: 100vh;
+}
+
+body {
+    background-image: repeating-linear-gradient(to bottom right, white 0%, rgba(0, 0, 0 , 0.1) 0.05%, white 0.1%, white 1.2%);
+}
+
+#root {
+    min-height: 100%;
+    padding: 0;
+}
+
+.header {
+    width: 100%;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    min-width: 100%;
+    width: 100%;
+    min-height: 50px;
+    background-color: var(--bgc)
+}
+
+@media (prefers-color-scheme: light) {
+    html {
+        background: #fff;
+        color: #334;
+    }
+}

@@ -1,35 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import {Route, Routes} from "react-router-dom";
+import Header from "./component/ui/Header";
+import Login from "./component/ui/model/Login";
+import Footer from "./component/ui/Footer";
+import Root from "./component/ui/model/Root";
+import Users from "./component/ui/model/Users";
+import User from "./component/ui/model/User";
+import Tournaments from "./component/ui/model/Tournaments";
+import Tournament from "./component/ui/model/Tournament";
+import Roles from "./component/ui/model/Roles";
+import Role from "./component/ui/model/Role";
+import Matches from "./component/ui/model/Matches";
+import Match from "./component/ui/model/Match";
+import {CssBaseline} from "@mui/material";
+import Box from "@mui/material/Box";
+import Error from "./component/ui/Error"
+import useError from "./features/error/errorMessage";
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    const [error] = useError()
+
+    return (<>
+            <CssBaseline />
+            <Header />
+            { error && <Error /> }
+            <Box>
+                <main>
+                    <Routes>
+                        <Route path="/" element={<Root/>} />
+                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/users" element={<Users/>}/>
+                        <Route path="/user/:id" element={<User/>}/>
+                        <Route path="/tournaments" element={<Tournaments/>}/>
+                        <Route path="/tournament/:id" element={<Tournament/>}/>
+                        <Route path="/roles" element={<Roles/>}/>
+                        <Route path="/role/:id" element={<Role/>}/>
+                        <Route path="/matches" element={<Matches/>}/>
+                        <Route path="/match/:id" element={<Match/>}/>
+                    </Routes>
+                </main>
+            </Box>
+            <Footer />
+        </>
+    )
 }
 
 export default App
