@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../../app/store'
 
 interface MatchState {
     value: boolean
@@ -21,5 +20,4 @@ export const matchSlice = createSlice({
 })
 
 export const { setLogin } = matchSlice.actions
-export const selectCount = (state: RootState) => state.login
 export const matchReducer = matchSlice.reducer
