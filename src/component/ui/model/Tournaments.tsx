@@ -1,27 +1,47 @@
-import {useAppDispatch, useAppSelector} from "../../../app/hooks";
-import {RootState} from "../../../app/store";
-import React, {useEffect} from "react";
-import {setLogin} from "../../../features/team/teamSlice";
-import {Button} from "@mui/material";
-import {redirect} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Button, Container} from "@mui/material";
+import {useNavigate} from "react-router-dom";
+import {backendUrl, fetchData} from "../../../lib/Library";
 
 
-const Login = () => {
-    const isLoggedIn = useAppSelector((state: RootState) => state.login.value)
-    const dispatch = useAppDispatch()
+const Tournaments = () => {
+    const navigate = useNavigate()
+    const [page, setPage] = useState<number>(0)
 
-    useEffect(()=> {
-        console.log(`State changed in ${Login.name}: ${isLoggedIn}`);
-    }, [isLoggedIn])
+    const fetchTournaments = async (page: number) => {
+        const json = await fetchData(`${backendUrl}/tournaments/page/${page.toString()}?size=${25}`, 'GET', 'text/plain')
+        console.table(json)
+        return json
+    }
 
-    const clickHandle = (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
-        redirect("/login")
+    const nextPage = () => {
+        setPage(Math.min(Number.MAX_VALUE, page + 1))
     };
 
-    return <div className="header">
-        <Button variant="contained" onClick={clickHandle}>Přihlásit se</Button>
-    </div>
+    const prevPage = () => {
+        setPage(Math.max(0, page - 1))
+    };
+
+    useEffect(() => {
+        console.log(`Page number changed in ${Tournaments.name}: ${page}`);
+        navigate("/tournaments/" + page)
+        console.table(fetchTournaments(page))
+    }, [page])
+
+    useEffect(() => {
+        console.log(`Page number changed in ${Tournaments.name}: ${page}`);
+        navigate("/tournaments/" + page)
+        console.table(fetchTournaments(page))
+    }, []) // TODO: Check if working
+
+    return <>
+        <Container className='tournaments'>
+        </Container>
+        <Container className='pageButtons'>
+            <Button variant="contained" onClick={prevPage} className='btnCustom' sx={{width: '20px'}}>&lt;</Button>
+            <Button variant="contained" onClick={nextPage} className='btnCustom' sx={{width: '20px'}}>&gt;</Button>
+        </Container>
+    </>
 };
 
-export default Login;
+export default Tournaments;

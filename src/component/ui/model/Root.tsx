@@ -1,15 +1,13 @@
 import * as React from 'react';
 import {useAppSelector} from "../../../app/hooks";
 import {RootState} from "../../../app/store";
-import {useNavigate} from "react-router-dom";
+import {redirect} from "react-router-dom";
 
 export default function Root() {
-    const navigate = useNavigate()
-    const isLoggedIn = useAppSelector((state: RootState) => state.login.value)
+    const isLoggedIn = useAppSelector((state: RootState) => state.login.authToken)
 
-    if (!isLoggedIn)
-        navigate("/login")
-
+    if (isLoggedIn == null)
+        redirect("/login")
 
     return (
         <></>
