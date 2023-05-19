@@ -4,6 +4,7 @@ import {userReducer} from "../features/user/userSlice";
 import {matchReducer} from "../features/match/matchSlice";
 import {teamsReducer} from "../features/team/teamSlice";
 import {tournamentReducer} from "../features/tournament/tournamentSlice";
+import {errorReducer} from "../features/error/errorSlice";
 
 export const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
         matches: matchReducer,
         teams: teamsReducer,
         users: userReducer,
-        login: loginReducer
+        login: loginReducer,
+        error: errorReducer
     },
 })
 
