@@ -12,35 +12,65 @@ import Roles from "./component/ui/model/Roles";
 import Role from "./component/ui/model/Role";
 import Matches from "./component/ui/model/Matches";
 import Match from "./component/ui/model/Match";
-import {CssBaseline} from "@mui/material";
-import Box from "@mui/material/Box";
-import Error from "./component/ui/Error"
-import useError from "./features/error/errorMessage";
+import {Container, CssBaseline} from "@mui/material";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {store} from "./app/store";
+import Logout from "./component/ui/model/Logout";
+import {useEffect} from "react";
+import {preFlight} from "./lib/Library";
 
 function App() {
+    preFlight()
 
-    const [error] = useError()
+    useEffect(() => {
+        store.subscribe(() => {
+            const error = store.getState().error.value
+            if (error != undefined) {
+                let message = <>
+                    {error?.title && <h4>{error.title}</h4>}
+                    {error?.message && <p>{error.message}</p>}
+                </>
+
+                toast.error(message, {
+                    autoClose: 4000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark"
+                })
+            }
+        })
+    }, [])
 
     return (<>
             <CssBaseline />
             <Header />
-            { error && <Error /> }
-            <Box>
+            <ToastContainer/>
                 <main>
-                    <Routes>
-                        <Route path="/" element={<Root/>} />
-                        <Route path="/login" element={<Login/>}/>
-                        <Route path="/users" element={<Users/>}/>
-                        <Route path="/user/:id" element={<User/>}/>
-                        <Route path="/tournaments" element={<Tournaments/>}/>
-                        <Route path="/tournament/:id" element={<Tournament/>}/>
-                        <Route path="/roles" element={<Roles/>}/>
-                        <Route path="/role/:id" element={<Role/>}/>
-                        <Route path="/matches" element={<Matches/>}/>
-                        <Route path="/match/:id" element={<Match/>}/>
-                    </Routes>
+                    <Container className='mainBox' sx={{ display: 'flex', flexDirection: 'column' }}>
+                        <Routes>
+                            <Route path="/" element={<Root/>} />
+                            <Route path="/login" element={<Login/>}/>
+                            <Route path="/logout" element={<Logout/>}/>
+                            <Route path="/users" element={<Users/>}/>
+                            <Route path="/users/:page" element={<Users/>}/>
+                            <Route path="/user" element={<User/>}/>
+                            <Route path="/user/:id" element={<User/>}/>
+                            <Route path="/tournaments" element={<Tournaments/>}/>
+                            <Route path="/tournaments/:page" element={<Tournaments/>}/>
+                            <Route path="/tournament/:id" element={<Tournament/>}/>
+                            <Route path="/roles" element={<Roles/>}/>
+                            <Route path="/roles/:page" element={<Roles/>}/>
+                            <Route path="/role/:id" element={<Role/>}/>
+                            <Route path="/matches" element={<Matches/>}/>
+                            <Route path="/matches/:page" element={<Matches/>}/>
+                            <Route path="/match/:id" element={<Match/>}/>
+                        </Routes>
+                    </Container>
                 </main>
-            </Box>
             <Footer />
         </>
     )

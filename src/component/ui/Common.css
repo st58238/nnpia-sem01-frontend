@@ -1,19 +1,23 @@
 :root {
-    --bgc: rgb(25, 118, 210);
-    --bgc-grey: rgb(248, 248, 248);
+    /*--bgc: rgb(25, 118, 210);*/
+    /*--bgc-grey: rgb(248, 248, 248);*/
+    /*--bgc-dark: rgb(21, 24, 107);*/
+    /*--bgc-dark-blue: rgb(61, 68, 140);*/
 }
 
 html {
-    color: #bcd;
+    /*color: #bcd;*/
 }
 
-html, body {
+html, body, #root {
     min-height: 100vh;
     height: 100vh;
+    min-width: 100vw;
+    width: 100vw;
 }
 
 body {
-    background-image: repeating-linear-gradient(to bottom right, white 0%, rgba(0, 0, 0 , 0.1) 0.05%, white 0.1%, white 1.2%);
+    background-image: repeating-linear-gradient(to bottom right, black 0%, #ff5531 0.05%, black 0.1%, black 1.4%);
 }
 
 #root {
@@ -22,7 +26,24 @@ body {
 }
 
 .header {
+    /*background-color: var(--bgc-dark) !important;*/
+    /*color: white !important;*/
     width: 100%;
+}
+
+.mainBox {
+    margin: auto auto;
+    background-color: rgba(39, 39, 39, 0.90) !important;
+    min-height: calc(100vh - 64px) !important;
+}
+
+.customBox {
+    border-radius: 4px;
+    border: 1px solid rgba(255, 85, 49, 0.36);
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    background-color: rgba(40,40,40,0.3)
 }
 
 .footer {
@@ -31,12 +52,32 @@ body {
     min-width: 100%;
     width: 100%;
     min-height: 50px;
-    background-color: var(--bgc)
+    /*background-color: var(--bgc-dark) !important;*/
+    /*color: white !important;*/
+}
+
+.btnCustom {
+    /*border-color: var(--bgc-dark) !important;*/
+    /*background-color: var(--bgc-dark-blue) !important;*/
+    /*color: white !important;*/
+}
+
+.btnCustom:not(:last-of-type) {
+    margin-right: 20px;
 }
 
 @media (prefers-color-scheme: light) {
     html {
         background: #fff;
-        color: #334;
+        color: #334 !important;
+    }
+
+    body {
+        background-image: repeating-linear-gradient(to bottom right, white 0%, rgba(0, 0, 0 , 0.1) 0.05%, white 0.1%, white 1.2%);
+    }
+
+    .btnCustom {
+        border-color: white !important;
+        color: black !important;
     }
 }
