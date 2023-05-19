@@ -1,24 +1,28 @@
+/**
+ * Shamelessly PARTLY stolen from https://codevoweb.com/form-validation-react-hook-form-material-ui-react/
+ * Thanks to original author and Bc. Chrbolka Ondřej for directions
+ */
+
 import * as yup from "yup"
-import {useForm} from "react-hook-form";
+import {object} from "yup";
+import {useForm, FormProvider, SubmitHandler} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import Typography from "@mui/material/Typography";
 import * as React from "react";
-import {Button} from "@mui/material";
+import {Box, Button} from "@mui/material";
 import {useAppDispatch} from "../../../app/hooks";
-import {FormContainer, TextFieldElement} from "react-hook-form-mui";
-import {setLogin} from "../../../features/login/loginSlice";
-import {ReactElement} from "react";
-import {ErrorValues} from "../Error";
-import useError from "../../../features/error/errorMessage";
+import {setExpiry, setLogin} from "../../../features/login/loginSlice";
+import {useEffect} from "react";
+import FormInput from "./FormInput";
+import {ErrorValues, setError} from "../../../features/error/errorSlice";
 
-const resolver = yupResolver(yup.object({
+
+const loginSchema = yupResolver(object({
     "username": yup.string()
-        .max(255, "Username too long, use up to 255 characters.")
-        .required("Required field"),
+        .required('Username is required')
+        .max(255, 'Username must be less than 255 characters'),
     "password": yup.string()
-        .max(255, "Password too long, use up to 255 characters.")
-        .required("Required field")
-
+        .required('Password is required')
+        .max(255, 'Password must be less than 255 characters')
 }))
 
 interface LoginFormValues {
@@ -27,40 +31,77 @@ interface LoginFormValues {
 }
 
 const LoginForm = () => {
-    const {register, handleSubmit, formState:{errors}} = useForm<LoginFormValues>({resolver})
-    const [error, setError] = useError()
+    const methods = useForm<LoginFormValues>({resolver: loginSchema})
     const dispatch = useAppDispatch()
-    let err: ReactElement | undefined = undefined
 
-    const submitHandle = async (data: LoginFormValues) => {
+    const {
+        reset,
+        handleSubmit,
+        register,
+        formState: { isSubmitSuccessful, errors },
+    } = methods
+
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            reset();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isSubmitSuccessful]);
+
+    const onSubmitHandler: SubmitHandler<LoginFormValues> = async (data) => {
         const result = await fetch("http://localhost:9000/api/v1/login", {
             method: "post",
             mode: "cors",
-            body: JSON.stringify({"username": data.username, "password": data.password}),
-            //headers: { 'Content-type': 'application/json; charset=UTF-8' }
+            body: JSON.stringify({"username": data.username, "password": data.password})
         })
         if (result.ok) {
-            const token = await result.text()
-            console.log("Got token: " + token)
-            dispatch(setLogin(token))
+            const res = await result.json()
+            console.table(result)
+            dispatch(setLogin(res.token))
+            dispatch(setExpiry(res.expiry))
+            dispatch(setError(undefined))
         } else {
-            const vals: ErrorValues = { title: "", message: undefined }
-            // @ts-ignore
-            setError(vals)
+            const errorValues: ErrorValues = {
+                title: "Authentication failed",
+                message: await result.text()
+            }
+            dispatch(setError(errorValues))
         }
-    }
+    };
 
     return <>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Login
-        </Typography>
-        <FormContainer onSuccess={ data => submitHandle(data as LoginFormValues) }>
-            <TextFieldElement id="username" label={"Username"} aria-describedby="username-text" {...register("username", { required: true })} />
-            <TextFieldElement id="password" label={"Password"} aria-describedby="password-text" {...register("password", { required: true })} sx={{ marginTop: "20px"}} />
-            <Button variant={"contained"} type="submit" sx={{ marginTop: "20px" }}>Login</Button>
-        </FormContainer>
+        <FormProvider {...methods}>
+            <Box
+                component='form'
+                noValidate
+                autoComplete='off'
+                onSubmit={handleSubmit(onSubmitHandler)}
+            >
+                <FormInput
+                    name='username'
+                    required
+                    fullWidth
+                    label='Username'
+                    sx={{ mb: 2 }}
+                />
+                <FormInput
+                    name='password'
+                    required
+                    fullWidth
+                    label='Password'
+                    type='password'
+                    sx={{ mb: 2 }}
+                />
+                <Button
+                    variant='contained'
+                    fullWidth
+                    type='submit'
+                    value='Login'
+                    sx={{ py: '0.8rem', mt: '1rem' }}
+                >Login</Button>
+            </Box>
+        </FormProvider>
     </>
 }
-//<FormHelperText id="username-text">Your username, duh?!</FormHelperText>
-// <FormHelperText id="password-text">Your password, for security reasons.</FormHelperText>
+
 export default LoginForm
