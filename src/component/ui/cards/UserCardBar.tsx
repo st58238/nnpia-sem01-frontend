@@ -30,8 +30,8 @@ const UserCardBar = ({user}: Props) => {
 
     return <Box className='customBox' gap={20}>
         <p style={{ fontWeight: 'bold', flexGrow: 5 }}>{user.username}</p>
-        <p style={{ width: '100px', flexGrow: 3 }}>Active: {enabled ? 'Yes' : 'No'}</p>
-        <p style={{ flexGrow: 8 }}>Registered on: {user.registeredDate.toString()}</p>
+        <p style={{ width: '100px', flexGrow: 3 }}>{enabled ? 'Yes' : 'No'}</p>
+        <p style={{ flexGrow: 8 }}>{user.registeredDate.toString()}</p>
         <Container sx={{ flexGrow: 3 }}>
             <Button variant="contained" onClick={toggleEnabled} className='btnCustom' sx={{ height: '35px', width: '100px' }}>
                 { enabled ? "Disable" : "Enable" }
