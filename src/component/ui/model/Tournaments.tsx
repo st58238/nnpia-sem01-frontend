@@ -9,9 +9,7 @@ const Tournaments = () => {
     const [page, setPage] = useState<number>(0)
 
     const fetchTournaments = async (page: number) => {
-        const json = await fetchData(`${backendUrl}/tournaments/page/${page.toString()}?size=${25}`, 'GET', 'text/plain')
-        console.table(json)
-        return json
+        return await fetchData(`${backendUrl}/tournaments/page/${page.toString()}?size=${25}`, 'GET', 'text/plain')
     }
 
     const nextPage = () => {
@@ -23,16 +21,9 @@ const Tournaments = () => {
     };
 
     useEffect(() => {
-        console.log(`Page number changed in ${Tournaments.name}: ${page}`);
         navigate("/tournaments/" + page)
-        console.table(fetchTournaments(page))
+        console.table(fetchTournaments(page)) // TODO: render
     }, [page])
-
-    useEffect(() => {
-        console.log(`Page number changed in ${Tournaments.name}: ${page}`);
-        navigate("/tournaments/" + page)
-        console.table(fetchTournaments(page))
-    }, []) // TODO: Check if working
 
     return <>
         <Container className='tournaments'>
