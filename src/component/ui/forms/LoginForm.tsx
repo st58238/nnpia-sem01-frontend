@@ -37,8 +37,7 @@ const LoginForm = () => {
     const {
         reset,
         handleSubmit,
-        register,
-        formState: { isSubmitSuccessful, errors },
+        formState: { isSubmitSuccessful },
     } = methods
 
     useEffect(() => {
@@ -56,9 +55,8 @@ const LoginForm = () => {
         })
         if (result.ok) {
             const res = await result.json()
-            console.table(result)
             dispatch(setLogin(res.token))
-            dispatch(setExpiry(res.expiry))
+            dispatch(setExpiry(new Date(res.expiry).toISOString()))
             dispatch(setError(undefined))
         } else {
             const errorValues: ErrorValues = {
