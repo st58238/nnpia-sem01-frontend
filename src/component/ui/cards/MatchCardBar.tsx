@@ -1,7 +1,7 @@
 import {Team} from "./TeamCard";
 import {Box} from "@mui/material";
 import React from "react";
-import {User} from "./UserCardBar";
+import {User} from "./UserGridElement";
 
 interface Props {
     match: Match
@@ -18,12 +18,12 @@ export interface Match {
 }
 
 const MatchCardBar = ({match}: Props) => {
-    return <Box className='customBox' gap={20}>
-        <p style={{ fontWeight: 'bold', flexGrow: 5 }}>{match.name}</p>
-        { match.description && <p style={{ width: '100px', flexGrow: 3 }}>{match.description}</p> }
-        <p>{match.teamOne!.name}</p>
-        <p>vs.</p>
-        <p>{match.teamTwo!.name}</p>
+    return <Box className='customBox' gap={5} sx={{ display: 'flex' }}>
+        <p style={{ flexGrow: 2, width: "100%", fontWeight: 'bold' }}>{match.name}</p>
+        <p style={{ flexGrow: 3, width: "100%",  }}>{ match.description && match.description }</p>
+        <p style={{ flexGrow: 3, width: "100%",  }}>{match.teamOne!.name}</p>
+        <p style={{ flexGrow: 3, width: "100%",  }}>vs.</p>
+        <p style={{ flexGrow: 3, width: "100%",  }}>{match.teamTwo!.name}</p>
     </Box>
 }
 

@@ -6,22 +6,17 @@ import {GridColDef} from "@mui/x-data-grid";
 import Table from "../grid/Table";
 import {Button, Container} from "@mui/material";
 
-const Direction = {
-    ASC: "ASC",
-    DESC: "DESC"
-}
-
 const Users = () => {
     const navigate = useNavigate()
-    const [page, setPage] = useState<number>(0)
+    const [page, _] = useState<number>(0)
     const [data, setData] = useState<Array<User>>()
-    const [sortValue, setSortValue] = useState<string | null>(null)
-    const [sortDirection, setSortDirection] = useState<string | null>(null)
+    const [sortValue, _] = useState<string | null>(null)
+    const [sortDirection, _] = useState<string | null>(null)
     const [rowCount, setRowCount] = useState<number>(0)
 
     useEffect(() => {
         fetchData(`${backendUrl}/users/count`, 'GET', 'text/plain')
-            .then(p => { // TODO pagination model
+            .then(p => {
                 p.text().then(t => setRowCount(+t)) // +string makes casts to number
             })
     }, [])
@@ -38,20 +33,6 @@ const Users = () => {
         return await fetchData(`${backendUrl}/users/page/${page.toString()}?size=${25}&sort=${sort}&direction=${direction}`, 'GET', 'text/plain')
     }
 
-    const sort = (column: string) => {
-        if (column == sortValue) {
-            setSortValue(column)
-            if (sortDirection == "ASC")
-                setSortDirection(Direction.DESC)
-            else
-                setSortDirection(Direction.ASC)
-
-        } else {
-            setSortValue(column)
-            setSortDirection(Direction.ASC)
-        }
-    }
-
     useEffect(() => {
         navigate("/users/" + page)
         fetchUsers(page, sortValue, sortDirection).then(async v => setData(await v.json()))
@@ -64,8 +45,8 @@ const Users = () => {
         { field: 'col4', headerName: 'Toggle enabled', flex: 3, width: 150, sortable: false, editable: false, groupable: false, filterable: false,
             renderCell: (params) => {
             const user = params.value as User
-                const [active, setActive] = useState(user.enabled)
-                return <Button variant="contained" onClick={ e => {toggleEnabled(user, setActive)}} className='btnCustom'
+                const [_, setActive] = useState(user.enabled)
+                return <Button variant="contained" onClick={ _ => {toggleEnabled(user, setActive)}} className='btnCustom'
                         sx={{height: '35px', width: '100px'}}>
                     { user.enabled ? "Disable" : "Enable" }
                 </Button>
