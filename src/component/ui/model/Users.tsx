@@ -8,10 +8,10 @@ import {Button, Container} from "@mui/material";
 
 const Users = () => {
     const navigate = useNavigate()
-    const [page, _] = useState<number>(0)
+    const [page] = useState<number>(0)
     const [data, setData] = useState<Array<User>>()
-    const [sortValue, _] = useState<string | null>(null)
-    const [sortDirection, _] = useState<string | null>(null)
+    const [sortValue] = useState<string | null>(null)
+    const [sortDirection] = useState<string | null>(null)
     const [rowCount, setRowCount] = useState<number>(0)
 
     useEffect(() => {
