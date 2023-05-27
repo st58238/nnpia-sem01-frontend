@@ -29,7 +29,7 @@ Install and run nnpia-sem01-frontend with these commands:
 ## Database model
 
 ![Users.png](/Users.png?raw=true)
-![Matches.png](/Tournaments.png?raw=true)
+![Matches.png](/Matches.png?raw=true)
 
 
 ## Authors
