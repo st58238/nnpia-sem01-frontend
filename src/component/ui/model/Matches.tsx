@@ -4,9 +4,9 @@ import {useNavigate} from "react-router-dom";
 import {backendUrl, fetchData} from "../../../lib/Library";
 import MatchCardBar, {Match} from "../cards/MatchCardBar";
 
-const Direction = {
-    ASC: "ASC",
-    DESC: "DESC"
+enum Direction {
+    ASC = "ASC",
+    DESC = "DESC"
 }
 
 const Matches = () => {
