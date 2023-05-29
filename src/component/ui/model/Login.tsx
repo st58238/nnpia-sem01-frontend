@@ -11,7 +11,7 @@ const Login = () => {
     const isLoggedIn = useAppSelector((state: RootState) => state.login)
 
     return <Card sx={{ width: '25%', margin: 'auto auto', marginTop: '100px !important', padding: '20px' }}>
-        { isLoggedIn.authToken != undefined ? <Navigate to='/user'></Navigate> : <></> }
+        { isLoggedIn.authToken != null ? <Navigate to='/user'></Navigate> : <></> }
         <Typography variant="h5" sx={{ flexGrow: 1, paddingBottom: '20px' }}>
             Login
         </Typography>

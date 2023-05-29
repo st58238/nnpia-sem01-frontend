@@ -16,13 +16,9 @@ import {Container, CssBaseline} from "@mui/material";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {store} from "./app/store";
-import Logout from "./component/ui/model/Logout";
 import {useEffect} from "react";
-import {preFlight} from "./lib/Library";
 
 function App() {
-    preFlight()
-
     useEffect(() => {
         store.subscribe(() => {
             const error = store.getState().error.value
@@ -54,7 +50,6 @@ function App() {
                         <Routes>
                             <Route path="/" element={<Root/>} />
                             <Route path="/login" element={<Login/>}/>
-                            <Route path="/logout" element={<Logout/>}/>
                             <Route path="/users" element={<Users/>}/>
                             <Route path="/users/:page" element={<Users/>}/>
                             <Route path="/user" element={<User/>}/>

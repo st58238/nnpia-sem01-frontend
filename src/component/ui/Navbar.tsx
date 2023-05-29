@@ -22,9 +22,6 @@ export default function Navbar() {
         <Button component={Link} to={'/users'} variant="contained" className='btnCustom' >
             Users
         </Button>
-        <Button component={Link} to={'/roles'} variant="contained" className='btnCustom' >
-            Roles
-        </Button>
         <Button component={Link} to={'/user'} variant="contained" className='btnCustom' >
             Profile
         </Button>
