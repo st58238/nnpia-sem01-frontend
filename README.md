@@ -1,9 +1,9 @@
 
-# Tournament manager (frontned)
+# Tournament manager (frontend)
 
-Simple web application for demostration of capabilities of Spring Boot 3 and React.js 18.
+Simple web application for demonstration of capabilities of Spring Boot 3 and React.js 18.
 
-The application frontent is used to present information about toutnaments, matches, users and their roles and to modify, create or delete the presented data.
+The application frontend is used to present information about tournaments, matches, users and their roles and to modify, create or delete the presented data.
 ## Requirements
 
 ```
