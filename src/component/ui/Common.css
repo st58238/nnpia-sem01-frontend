@@ -34,7 +34,7 @@ body {
 .mainBox {
     margin: auto auto;
     background-color: rgba(39, 39, 39, 0.90) !important;
-    min-height: calc(100vh - 64px) !important;
+    min-height: calc(100vh - 64px - 24px) !important;
 }
 
 .customBox {
