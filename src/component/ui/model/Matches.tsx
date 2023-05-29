@@ -1,13 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {Box, Button, Container} from "@mui/material";
 import {useNavigate} from "react-router-dom";
-import {backendUrl, fetchData} from "../../../lib/Library";
+import {backendUrl, Direction, fetchData} from "../../../lib/Library";
 import MatchCardBar, {Match} from "../cards/MatchCardBar";
-
-enum Direction {
-    ASC = "ASC",
-    DESC = "DESC"
-}
 
 const Matches = () => {
     const navigate = useNavigate()
